@@ -1,7 +1,10 @@
 package principal;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import modelos.Titulo;
+import modelos.TituloOMDB;
 
 import java.awt.image.TileObserver;
 import java.io.IOException;
@@ -30,8 +33,15 @@ public class PrincipalComBuscas {
         String json = response.body();
         System.out.println(json);
 
-        Gson gson = new Gson();
-        Titulo novoTitulo = gson.fromJson(json, Titulo.class);
-        System.out.println(novoTitulo);
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
+        //Titulo novoTitulo = gson.fromJson(json, Titulo.class);
+        TituloOMDB tituloOMDB = gson.fromJson(json, TituloOMDB.class);
+        System.out.println(tituloOMDB);
+
+        Titulo testeTitulo = new Titulo(tituloOMDB);
+        System.out.println("********************Titulo convertido********************");
+        System.out.println("");
+        System.out.println(testeTitulo);
+        System.out.println("");
     }
 }
