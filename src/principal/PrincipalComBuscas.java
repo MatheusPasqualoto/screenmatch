@@ -3,6 +3,7 @@ package principal;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import exceptions.ErroDeConversaoDeAno;
 import modelos.Titulo;
 import modelos.TituloOMDB;
 
@@ -21,7 +22,7 @@ public class PrincipalComBuscas {
         System.out.println("Digite um filme para busca: ");
         var busca = leitura.nextLine();
 
-        String endereco = "http://www.omdbapi.com/?t=" + busca + "&apikey=8731b53c";
+        String endereco = "http://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=8731b53c";
         try{
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -39,8 +40,8 @@ public class PrincipalComBuscas {
             System.out.println(tituloOMDB);
 
             Titulo testeTitulo = new Titulo(tituloOMDB);
-            System.out.println("********************Titulo convertido********************");
             System.out.println("");
+            System.out.println("********************Titulo convertido********************");
             System.out.println(testeTitulo);
             System.out.println("");
         } catch (NumberFormatException e){
@@ -49,8 +50,8 @@ public class PrincipalComBuscas {
         } catch(IllegalArgumentException e){
             System.out.println("Verifique o nome pesquisado: ");
             System.out.println(e.getMessage());
-        } catch(Exception e){
-            System.out.println("Erro não identificado");
+        } catch(ErroDeConversaoDeAno e){
+            System.out.println(e.getMessage());
         }
 
         System.out.println("Programa finalizado corretamente!");
